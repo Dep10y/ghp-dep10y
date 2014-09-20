@@ -40,10 +40,9 @@ if __name__ == '__main__':
                 legitFlag = true;
             }
             function legit_load() {
-				
+				legitCursor = editor.getCursorPosition();
                 allTheThings.child($("#legitname").val()).on('value', function(snapshot) {
                     if(!legitFlag){
-						legitCursor = editor.getCursorPosition();
                         editor.getSession().setValue(snapshot.val());
                         editor.moveCursorToPosition(legitCursor);
                     }

@@ -68,7 +68,7 @@ def newDroplet(gh_id=None, int_id=None):
         firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Setting DNS'})
     createdDrop = doGet('/droplets/%s' % newdrop['droplet']['id'])
     newsets = getRecords()
-    domainset = doNCPost(dict({'Command':'namecheap.domains.dns.setHosts','SLD':'dep10y','TLD':'me','HostName1':'flask%s' % num,'TTL1':'1200','RecordType1':'A','Address1':createdDrop['droplet']['networks']['v4'][0]['ip_address']}.items()+newsets.items()))
+    domainset = doNCPost(dict({'Command':'namecheap.domains.dns.setHosts','SLD':'dep10y','TLD':'me','HostName1':'%s%s' % (project['type'],num),'TTL1':'1200','RecordType1':'A','Address1':createdDrop['droplet']['networks']['v4'][0]['ip_address']}.items()+newsets.items()))
     if gh_id:
         firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Running at %s' % createdDrop['droplet']['name']})
     return createdDrop

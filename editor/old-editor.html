@@ -45,27 +45,27 @@ if __name__ == '__main__':
             var selfKey = makeid();
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/python");
-            var allTheThings = new Firebase("https://dep10y.firebaseio.com/");
+            var fbase = new Firebase("https://dep10y.firebaseio.com/");
             function legit_save() {
 				legitCursor = editor.getCursorPosition();
-                allTheThings.child($("#legitname").val()+"/data").set(editor.getSession().getValue());
-                allTheThings.child($("#legitname").val()+"/leP").set(selfKey);
+                fbase.child($("#legitname").val()+"/data").set(editor.getSession().getValue());
+                fbase.child($("#legitname").val()+"/leP").set(selfKey);
             }
             function legit_load() {
 				legitCursor = editor.getCursorPosition();
 				console.log(legitCursor);
-                allTheThings.child($("#legitname").val()).on('value', function(snapshot) {
-					var isMe = snapshot.val().leP;
-					console.log(isMe);
-					isItReallyMe = isMe!=selfKey;
-                    if (!isItReallyMe) {
-                        editor.getSession().setValue(snapshot.val().data);
-                        editor.moveCursorToPosition(legitCursor);
-                    }
-                    legitFlag = false;
-                }, function(error){console.log(error)});
-            }
-            editor.container.addEventListener("keyup", legit_save, true);
+					fbase.child($("#legitname").val()).on('value', function(snapshot) {
+						//var snaptwo = fbase.child($("#legitname").val()).val();
+						var isMe = snapshot.val().leP;
+						console.log(isMe);
+						isItReallyMe = isMe!=selfKey;
+						if (!isItReallyMe) {
+							editor.getSession().setValue(snapshot.val().data);
+							editor.moveCursorToPosition(legitCursor);
+						}
+					});
+		   }
+           editor.container.addEventListener("keyup", legit_save, true);
         </script>
     </body>
 </html>

@@ -7,7 +7,7 @@
 		var things = new Firebase("https://dep10y.firebaseio.com/");
     var auth = new FirebaseSimpleLogin(things, function(e, u) {
         if(!e && u) {
-            location.href = "/editor/projects.html";
+            location.href = "projects.html";
             console.log(u);
         }
         else if (u) {
@@ -37,7 +37,7 @@ function login(svc) {
     <title>Dep10y</title>
         <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
 
-    <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
+    <link href="semantic/packaged/css/semantic.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="ui menu">

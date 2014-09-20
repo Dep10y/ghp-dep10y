@@ -11,6 +11,7 @@ var firebase = new Firebase("https://dep10y.firebaseio.com/");
 var usar = null;
 function rm_project(p) {
     firebase.child('projects').child(usar.id).child(p).remove();
+    firebase.child("fs").child(usar.id).child(p).remove();
     init();
 }
 
@@ -18,10 +19,31 @@ function mkname(one, two) {
     return one[Math.floor(Math.random()*one.length)] + "-" + two[Math.floor(Math.random()*two.length)] + "-" + Math.floor(Math.random() * 10000)
 }
 
+function create_flask(ref) {
+    var nodes = [{
+        text: "app.py"
+    },
+    {
+        text: "templates",
+        children: [
+        {
+            "text": "index.html"
+        }
+        ]
+    }];
+    firebase.child("fs").child(usar.id).child(ref).set(nodes);
+}
+
 function mk_project(ptype) {
     var names1 = ["glorious", "fabulous", "amazing", "lord", "omniscient", "spooky", "scary"];
     var names2 = ["shrek", "ogre", "illuminati", "skeletons"];
-    firebase.child('projects').child(usar.id).push({name: mkname(names1, names2), type: ptype, state: "Waiting on server"});
+    var ref = firebase.child('projects').child(usar.id).push({name: mkname(names1, names2), type: ptype, state: "Waiting on server"}).name();
+    console.log("ref is " + ref);
+    switch(ptype) {
+        case "flask":
+            create_flask(ref);
+            break;
+    }
     init();
 }
 function init() {
@@ -44,6 +66,7 @@ function init() {
                 for(key in snapshot.val()) {
                     var o = snapshot.val()[key];
                     o["id"] = key;
+                    o["is_running"] = (o["state"].indexOf("Running") == 0)
                     stuff.push(o);
                 }
                 console.log(stuff);
@@ -62,7 +85,7 @@ function init() {
     {{#each projects}}
     <div class="item">
         <div class="content">
-            {{name}} - <a href="/editor/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> - <i>{{state}}</i>
+            {{name}} - {{#if is_running}} <a href="/editor/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i>
         </div>
     </div>
 {{/each}}

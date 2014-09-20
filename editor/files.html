@@ -15,7 +15,10 @@ function init() {
         if(e){}
         else if(u){
             usar = u;
-            $("#shrek").html(u.id);
+            firebase.child("fs").child(usar.id).child(window.location.hash.replace(/#/g, '')).on('value', function(v) {
+                console.log(v.val());
+                $("#shrek").jstree({core:{data:v.val()}});
+            });
         } else {
             location.href = "/editor/login.html";
         }

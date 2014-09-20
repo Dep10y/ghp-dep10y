@@ -67,7 +67,7 @@ if __name__ == '__main__':
         if deploys:
             for i in deploys:
                 val = deploys[i]
-        print(i,val)
+                print(i,val)
                 firebase.delete('/files', i)
                 thread = Thread(target=doDeploy, args=(i, val))
                 thread.start()

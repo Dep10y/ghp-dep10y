@@ -56,7 +56,7 @@ def newDroplet(gh_id=None, int_id=None):
     newdrop = doPost('/droplets',
         {'name':'flask%s.dep10y.me' % num,
         'region':'nyc3',
-        'image':6202169,
+        'image':6209694,
         'ssh_keys':[325148],
         'size':'512mb'})
     if gh_id:

@@ -1,0 +1,3 @@
+[submodule "editor/firepad"]
+	path = editor/firepad
+	url = git://github.com/firebase/firepad.git

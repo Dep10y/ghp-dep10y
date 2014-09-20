@@ -10,15 +10,19 @@
     <script>
 var firebase = new Firebase("https://dep10y.firebaseio.com/");
 var usar = null;
+
+function shrek4() {
+    var shrek1 = usar.id;
+    var shrek2 = window.location.hash.replace(/#/g, '');
+    var shrek3 = $("#shrek3").val();
+    location.href = "/editor/editor.html#" + [shrek1, shrek2, shrek3].join(":");
+}
+
 function init() {
     var fireshrek = new FirebaseSimpleLogin(firebase, function(e, u) {
         if(e){}
         else if(u){
             usar = u;
-            firebase.child("fs").child(usar.id).child(window.location.hash.replace(/#/g, '')).on('value', function(v) {
-                console.log(v.val());
-                $("#shrek").jstree({core:{data:v.val()}});
-            });
         } else {
             location.href = "/editor/login.html";
         }
@@ -28,6 +32,9 @@ function init() {
     </script>
 </head>
 <body onload="init();">
+    <h2>Create new file</h2>
+    <input type="text" id="shrek3" placeholder="File path (perhaps app.py, templates/index.html...)" />
+    <input type="button" value="Create" onclick="shrek4();" />
     <div id="shrek"></div>
 </body>
 </html>

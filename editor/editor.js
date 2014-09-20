@@ -3,6 +3,13 @@ var project = projec.replace(/\./g, '-').replace(/\//g, '-');
 var editor;
 var firebase;
 
+function init() {
+    projec = window.location.hash.replace(/#/g, '');
+    project = projec.replace(/\./g, '-').replace(/\//g, '-');
+    setup_editor();
+    setup_stuff();
+}
+
 function save_code() {
     firebase.child("code").child(project).child("text").set(editor.getSession().getValue());
 }

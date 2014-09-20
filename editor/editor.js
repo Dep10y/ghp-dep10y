@@ -4,8 +4,10 @@ var editor;
 var firebase;
 
 function init() {
+    save_code();
     projec = window.location.hash.replace(/#/g, '');
     project = projec.replace(/\./g, '-').replace(/\//g, '-');
+    $("#editor").html("");
     setup_editor();
     setup_stuff();
 }

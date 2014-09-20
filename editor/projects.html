@@ -3,6 +3,8 @@
     <title>Dep10y</title>
     <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
     <script src="//code.jquery.com/jquery.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
+
     <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
     <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
     <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js"></script>
@@ -87,7 +89,7 @@ function init() {
 </script>
 <body onload="init();">
     <div class="ui menu">
-		<h3 class="header item">Dep10y</h3>
+		<h3 class="header item"><a href="index.html">Dep10y</a></h3>
         <a class="item" href="editor.html">
             <i class="edit icon"></i> Editor
         </a>
@@ -98,6 +100,7 @@ function init() {
 			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
 		</span>
     </div>
+    <div style="padding-left:30px;padding-top:20px">
     <div class="ui form">
         Create a new
         <div class="ui blue submit button" onclick="mk_project('flask');">Flask</div>
@@ -115,6 +118,7 @@ function init() {
         <div class="ui active dimmer">
             <div class="ui text loader">Loading your projects</div>
         </div>
+    </div>
     </div>
 </body>
 </html>

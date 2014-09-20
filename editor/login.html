@@ -1,0 +1,34 @@
+<html>
+<head>
+    <script>
+function login() {
+    var things = new Firebase("https://dep10y.firebaseio.com/");
+    var auth = new FirebaseSimpleLogin(things, function(e, u) {
+        if(!e) {
+            location.href = "/editor/projects.html";
+        }
+    });
+    auth.login('github');
+}
+    </script>
+    <title>Dep10y</title>
+    <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="ui inverted menu">
+        <div class="ui item">
+            <a class="link" href="#">Dep10y.me</a>
+        </div>
+        <div class="right menu">
+            <div class="ui item">
+                <div class="ui icon input">
+                    <a href="#" class="ui link item" onclick="login();"><i class="unlock icon"></i> Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a onclick="login();" href="#">Login with GitHub</a>
+    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+</body>
+</html>

@@ -23,7 +23,7 @@ def doPost(path, args={}):
     return resp
 
 def doDeploy(project_id, f):
-    projects = firebase.get('/projects')
+    projects = firebase.get('/projects', name=None, params=None)
     p = None
     for project in projects:
         if project_id in projects[project]:
@@ -58,7 +58,7 @@ def doDeploy(project_id, f):
 if __name__ == '__main__':
     firebase = firebase.FirebaseApplication('https://dep10y.firebaseio.com', authentication=None)
     while True:
-        deploys = firebase.get('/files')
+        deploys = firebase.get('/files', name=None, params=None)
         if deploys:
             for i in deploys:
                 val = deploys[i]

@@ -22,7 +22,7 @@ def doPost(path, args={}):
     resp = json.loads(requests.post('https://api.digitalocean.com/v2%s' % path, data=json.dumps(args), headers={'Authorization':'Bearer %s' % TOKEN, 'Content-Type':'application/json'}).text)
     return resp
 
-def doDeploy(project_id, f):
+def doDeploy(project_id, fals):
     projects = firebase.get('/projects', name=None, params=None)
     p = None
     for project in projects:
@@ -37,20 +37,20 @@ def doDeploy(project_id, f):
         return False
 
     droplet = doGet('/droplets/%s' % p['droplet_id'])['droplet']
-    files = f
+    files = fals
     tmpdir = tempfile.mkdtemp()
     for f in files:
-        fi = open(os.path.join(tmpdir, f['filepath']), 'w')
-        fi.write(f['text'])
+        fi = open(os.path.join(tmpdir, files[f]['filepath']), 'w')
+        fi.write(files[f]['text'])
         fi.close()
-    p = subprocess.Popen(['/usr/bin/rsync', '-az', tmpdir, 'web@%s:web' % droplet['name']])
-    print p.wait()
+    po = subprocess.Popen('/usr/bin/rsync -aze "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --delete %s/ web@%s:web' % (tmpdir, droplet['name']), shell=True)
+    print po.wait()
     print('rsync done!')
     if p['type'] == 'flask':
-        p = subprocess.Popen(['/usr/bin/ssh', '-t', 'web@%s' % droplet['name'], '"kill `cat ~/.app_pid`; sleep 3; kill -9 `cat ~/.app_pid`; "'])
-        print p.wait()
-        p = subprocess.Popen('/usr/bin/ssh -t web@%s "screen \"python web/app.py\" &; echo $! > ~/.app_pid;"' % droplet['name'], shell=True)
-        print p.wait()
+        po = subprocess.Popen("/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web 'kill `cat /home/web/.app_pid`; sleep 3; kill -9 `cat /home/web/.app_pid`; '" % droplet['name'], shell=True)
+        print po.wait()
+        po = subprocess.Popen('/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web \'screen -m -d /usr/bin/python /home/web/web/app.py; echo `pidof SCREEN` > /home/web/.app_pid\'' % droplet['name'], shell=True)
+        print po.wait()
     else:
         print('Unsupported type!')
         return False
@@ -62,6 +62,7 @@ if __name__ == '__main__':
         if deploys:
             for i in deploys:
                 val = deploys[i]
+        print(i,val)
                 firebase.delete('/files', i)
                 thread = Thread(target=doDeploy, args=(i, val))
                 thread.start()

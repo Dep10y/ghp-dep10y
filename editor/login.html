@@ -1,7 +1,8 @@
 <html>
 <head>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
-function login() {
+function login(svc) {
     var things = new Firebase("https://dep10y.firebaseio.com/");
     var auth = new FirebaseSimpleLogin(things, function(e, u) {
         if(!e && u) {
@@ -12,26 +13,30 @@ function login() {
             console.log(e);
         }
     });
-    auth.login('github');
+    auth.login(svc);
 }
     </script>
     <title>Dep10y</title>
     <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="ui inverted menu">
-        <div class="ui item">
-            <a class="link" href="#">Dep10y.me</a>
-        </div>
-        <div class="right menu">
-            <div class="ui item">
-                <div class="ui icon input">
-                    <a href="#" class="ui link item" onclick="login();"><i class="unlock icon"></i> Login</a>
-                </div>
-            </div>
-        </div>
+    <div class="ui menu">
+		<h3 class="header item">Dep10y</h3>
+        <a class="item" href="editor.html">
+            <i class="edit icon"></i> Editor
+        </a>
+        <a class="active item" href="projects.html">
+            <i class="list icon"></i> Projects
+        </a>
+         <span class="right floated text item">
+			Signed in as <a href="#" id="user">Not Logged In</a>. <a href="logout.html">Logout?</a>
+		</span>
+    </div><div style="text-align:center">
+		<h2>Log in using</h2><br />
+		<!--<a onclick="login();" href="#" class="ui button">Login with GitHub</a>-->
+		<a onclick="login('github');" href="#" class="ui black large labeled button"><i class="fa fa-github"></i> Log in with Github</a>
+		<br /><br /><a onclick="login('twitter');" href="#" class="ui blue large labeled button"><i class="fa fa-twitter"></i> Log in with Twitter</a>
     </div>
-    <a onclick="login();" href="#">Login with GitHub</a>
     <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
     <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
 </body>

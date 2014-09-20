@@ -38,14 +38,14 @@ def doDeploy(project_id, f):
 
     droplet = doGet('/droplets/%s' % p['droplet_id'])['droplet']
     files = f
-    with tempfile.mkdtemp() as tmpdir:
-        for f in files:
-            fi = open(os.path.join(tmpdir, f['filepath']), 'w')
-            fi.write(f['text'])
-            fi.close()
-        p = subprocess.Popen(['/usr/bin/rsync', '-az', tmpdir, 'web@%s:web' % droplet['name']])
-        print p.wait()
-        print('rsync done!')
+    tmpdir = tempfile.mkdtemp()
+    for f in files:
+        fi = open(os.path.join(tmpdir, f['filepath']), 'w')
+        fi.write(f['text'])
+        fi.close()
+    p = subprocess.Popen(['/usr/bin/rsync', '-az', tmpdir, 'web@%s:web' % droplet['name']])
+    print p.wait()
+    print('rsync done!')
     if p['type'] == 'flask':
         p = subprocess.Popen(['/usr/bin/ssh', '-t', 'web@%s' % droplet['name'], '"kill `cat ~/.app_pid`; sleep 3; kill -9 `cat ~/.app_pid`; "'])
         print p.wait()

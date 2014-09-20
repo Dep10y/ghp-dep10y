@@ -26,7 +26,7 @@ if __name__ == '__main__':
     shrek()</div>
         <a onclick="legit_save();" class="btn">Legit Save</a>
         <a onclick="legit_load();" class="btn">Legit Load</a>
-        <input type="text" placeholder="Legit Project Name" id="legitname" />
+        <input type="text" placeholder="Legit Project Name" id="legitname" onkeyup="legit_load();" />
         <script src="/ace-builds/src-noconflict/ace.js"></script>
         <script>
             var editor = ace.edit("editor");
@@ -37,10 +37,11 @@ if __name__ == '__main__':
                 allTheThings.child($("#legitname").val()).set(editor.getSession().getValue());
             }
             function legit_load() {
-                allTheThings.child($("#legitname")).on('value', function(snapshot) {
+                allTheThings.child($("#legitname").val()).on('value', function(snapshot) {
                     editor.getSession().setValue(snapshot.val());
                 }, function(error){console.log(error)});
             }
+            editor.container.addEventListener("keydown", legit_save, true);
         </script>
     </body>
 </html>

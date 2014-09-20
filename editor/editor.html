@@ -54,15 +54,24 @@ html, body {
     <div id="buttons">
         <button class="ui red button">Deploy</button>
     </div>
+    <div class="ui input">
+		<input type="text" id="padName" placeholder="File name"/>
+	</div>
     <script src="//code.jquery.com/jquery.js"></script>
     <script src="/ace-builds/src-noconflict/ace.js"></script>
     <script src="static/firepad.js"></script>
     <script src="/editor/editor.js"></script>
-
     <script>
-setup_editor();
-setup_stuff();
+    $("#padName").on("keyup", function() {
+		location.href = "editor.html#"+$("#padName").val();
+	});
+    
     </script>
+    <script>
+		setup_editor();
+		setup_stuff();
+    </script>
+    
 
 </body>
 </html>

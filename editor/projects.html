@@ -52,6 +52,7 @@ function init() {
             console.log(error);
         }
         else if(user) {
+			$("#user").html(user.provider+":"+user.username);
             console.log(user);
             usar = user;
             var source = $("#projects-template").html();
@@ -99,16 +100,17 @@ function init() {
 </div>
 </script>
 <body onload="init();">
-    <div class="ui inverted menu">
-        <a class="item">
+    <div class="ui menu">
+		<h3 class="header item">Dep10y</h3>
+        <a class="item" href="editor.html">
             <i class="edit icon"></i> Editor
         </a>
-        <a class="active item">
+        <a class="active item" href="projects.html">
             <i class="list icon"></i> Projects
         </a>
-        <a class="item">
-            <i class="lock icon"></i> Logout
-        </a>
+         <span class="right floated text item">
+			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
+		</span>
     </div>
     <div class="ui form">
         Create a new

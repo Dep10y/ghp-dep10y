@@ -18,16 +18,33 @@ html, body {
     <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="ui inverted menu">
-        <a class="active item">
+	    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+
+	    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+	<script>
+		var firebase = new Firebase("https://dep10y.firebaseio.com/");
+
+	var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
+        if(error) {
+            console.log(error);
+        }
+        else if(user) {
+			$("#user").html(user.provider+":"+user.username);
+		}
+		});
+	
+	</script>
+    <div class="ui menu">
+		<h3 class="header item">Dep10y</h3>
+        <a class="item active" href="editor.html">
             <i class="edit icon"></i> Editor
         </a>
-        <a class="item" href="/editor/projects.html">
+        <a class="item" href="projects.html">
             <i class="list icon"></i> Projects
         </a>
-        <a class="item">
-            <i class="lock icon"></i> Logout
-        </a>
+         <span class="right floated text item">
+			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
+		</span>
     </div>
     <div id="editor-container"><div id="editor"></div></div>
     <br />
@@ -37,7 +54,6 @@ html, body {
     <script src="//code.jquery.com/jquery.js"></script>
     <script src="/ace-builds/src-noconflict/ace.js"></script>
     <script src="static/firepad.js"></script>
-    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
     <script src="/editor/editor.js"></script>
 
     <script>

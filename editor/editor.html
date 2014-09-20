@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Legit Editor</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <style type="text/css" media="screen">
+            #editor {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 50%;
+            }
+            body {
+                padding-top: 45%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="editor">def shrek():
+    print("shrek")
+
+if __name__ == '__main__':
+    shrek()</div>
+        <a onclick="legit_save();" class="btn">Legit Save</a>
+        <a onclick="legit_load();" class="btn">Legit Load</a>
+        <input type="text" placeholder="Legit Project Name" id="legitname" />
+        <script src="/ace-builds/src-noconflict/ace.js"></script>
+        <script>
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/python");
+            var allTheThings = new Firebase("https://dep10y.firebaseio.com/");
+            function legit_save() {
+                allTheThings.child($("#legitname").val()).set(editor.getSession().getValue());
+            }
+            function legit_load() {
+                allTheThings.child($("#legitname")).on('value', function(snapshot) {
+                    editor.getSession().setValue(snapshot.val());
+                }, function(error){console.log(error)});
+            }
+        </script>
+    </body>
+</html>

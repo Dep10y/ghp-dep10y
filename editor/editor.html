@@ -39,6 +39,8 @@ html, body {
 		});
 	
 	</script>
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
+
     <div class="ui menu">
 		<h3 class="header item"><a href="index.html">Dep10y</a></h3>
         <a class="item active" href="editor.html">
@@ -51,8 +53,14 @@ html, body {
 			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
 		</span>
     </div>
+    <div class="ui grid">
+    <div class="four wide column">
+		<p>The tree thing</p>
+	</div><div class="twelve wide column">
     <h2>Editing <span id="projectname"></span> -- <span id="filename"></span></h2>
     <div id="editor-container"><div id="editor"></div></div>
+    </div>
+    </div>
     <br />
     <div id="buttons">
         <button class="ui red button" onclick="push_that_button();">Deploy</button>

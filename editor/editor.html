@@ -41,7 +41,7 @@ if __name__ == '__main__':
                     editor.getSession().setValue(snapshot.val());
                 }, function(error){console.log(error)});
             }
-            editor.container.addEventListener("keydown", legit_save, true);
+            editor.container.addEventListener("keyup", legit_save, true);
         </script>
     </body>
 </html>

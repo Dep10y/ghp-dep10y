@@ -5,6 +5,7 @@ import time
 import xml.etree.ElementTree as ET
 from firebase import firebase, jsonutil
 from copy import deepcopy
+from threading import Thread
 
 TOKEN = '91a4cf30bfdaae8a3fa2a54d55fe7cfa79ce882bed94bff73f7db8c584c27817'
 def doGet(path, args={}):
@@ -48,7 +49,9 @@ def getRecords():
             newsets['MXPref%s' % pos] = stuff['MXPref']
     return newsets
 
-def newDroplet():
+def newDroplet(gh_id=None, int_id=None):
+    if gh_id:
+        firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Creating droplet'})
     num = random.randint(1111111,9999999)
     newdrop = doPost('/droplets',
         {'name':'flask%s.dep10y.me' % num,
@@ -56,15 +59,16 @@ def newDroplet():
         'image':6202169,
         'ssh_keys':[325148],
         'size':'512mb'})
-    print(newdrop)
-    print('Droplet created, waiting 15 secs before getting its ip')
+    if gh_id:
+        firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Waiting for creation to finish', 'droplet_id':newdrop['droplet']['id']})
     time.sleep(15)
+    if gh_id:
+        firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Setting DNS'})
     createdDrop = doGet('/droplets/%s' % newdrop['droplet']['id'])
-    print(createdDrop)
     newsets = getRecords()
     domainset = doNCPost(dict({'Command':'namecheap.domains.dns.setHosts','SLD':'dep10y','TLD':'me','HostName1':'flask%s' % num,'TTL1':'1200','RecordType1':'A','Address1':createdDrop['droplet']['networks']['v4'][0]['ip_address']}.items()+newsets.items()))
-    print(domainset)
-    print('Your droplet, %s, is now created.' % createdDrop['droplet']['name'])
+    if gh_id:
+        firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Running at %s' % createdDrop['droplet']['name']})
     return createdDrop
 
 def delDroplet(id):
@@ -88,11 +92,39 @@ def delDroplet(id):
     resp = doDelete('/droplets/%s' % id)
     return resp
 
-firebase = firebase.FirebaseApplication('https://dep10y.firebaseio.com', authentication=None)
+if __name__ == '__main__':
+    firebase = firebase.FirebaseApplication('https://dep10y.firebaseio.com', authentication=None)
+    x = firebase.get('/projects', name=None, params=None)
+    oldx = deepcopy(x)
+    while True:
+        x = firebase.get('/projects', name=None, params=None)
+        print(x)
+        print('old',oldx)
+        if not x:
+            x = {}
+        
+        for project in x:
+            gh_id = project
+            for int_id in x[project].keys():
+                otherstuff = x[gh_id][int_id]
+                if 'droplet_id' not in otherstuff and otherstuff['state'] == 'Waiting on server':
+                    thread = Thread(target = newDroplet, args=(gh_id, int_id))
+                    thread.start()
 
-def project_callback(response):
-    print(response)
-    print(response.keys())
+        if not oldx:
+            oldx = {}
 
-while True:
-	firebase.get_async('/projects', name=None, params=None, callback=project_callback)
+        for project in oldx:
+            gh_id = project
+            for int_id in oldx[project].keys():
+                deleted = False
+                if gh_id not in x:
+                    deleted = True
+                elif int_id not in x[project]:
+                    deleted = True
+                if deleted:
+                    thread = Thread(target = delDroplet, args=(oldx[gh_id][int_id]['droplet_id'],))
+                    thread.start()
+
+        oldx = deepcopy(x)
+        time.sleep(4)

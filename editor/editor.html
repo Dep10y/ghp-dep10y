@@ -45,6 +45,7 @@ if __name__ == '__main__':
                     if(!legitFlag){
 						legitCursor = editor.getCursorPosition();
                         editor.getSession().setValue(snapshot.val());
+                        editor.moveCursorToPosition(legitCursor);
                     }
                     legitFlag = false;
                 }, function(error){console.log(error)});

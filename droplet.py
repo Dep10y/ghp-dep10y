@@ -94,4 +94,4 @@ def project_callback(response):
     print(response)
     print(response.keys())
 
-firebase.get_async('/projects', None, {'print': 'pretty'}, callback=project_callback)
+firebase.get_async('/projects', name=None, params=None, callback=project_callback)

@@ -52,11 +52,13 @@ def getRecords():
 def newDroplet(gh_id=None, int_id=None):
     if gh_id:
         firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Creating droplet'})
+    project = firebase.get('/projects/%s/%s' % (gh_id, int_id))
     num = random.randint(1111111,9999999)
+    images = {'flask':6219398,'sinatra':6219719}
     newdrop = doPost('/droplets',
         {'name':'flask%s.dep10y.me' % num,
         'region':'nyc3',
-        'image':6209694,
+        'image': images[project['type']],
         'ssh_keys':[325148],
         'size':'512mb'})
     if gh_id:

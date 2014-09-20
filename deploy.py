@@ -51,6 +51,11 @@ def doDeploy(project_id, fals):
         print po.wait()
         po = subprocess.Popen('/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web \'screen -m -d /usr/bin/python /home/web/web/app.py; echo `pidof SCREEN` > /home/web/.app_pid\'' % droplet['name'], shell=True)
         print po.wait()
+    elif p['type'] == 'sinatra':
+        po = subprocess.Popen("/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web 'kill `cat /home/web/.app_pid`; sleep 3; kill -9 `cat /home/web/.app_pid`; '" % droplet['name'], shell=True)
+        print po.wait()
+        po = subprocess.Popen('/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web \'screen -m -d /usr/bin/ruby /home/web/web/app.rb; echo `pidof SCREEN` > /home/web/.app_pid\'' % droplet['name'], shell=True)
+        print po.wait()
     else:
         print('Unsupported type!')
         return False

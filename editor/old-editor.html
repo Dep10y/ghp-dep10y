@@ -48,7 +48,7 @@ if __name__ == '__main__':
             var allTheThings = new Firebase("https://dep10y.firebaseio.com/");
             function legit_save() {
 				legitCursor = editor.getCursorPosition();
-                allTheThings.child($("#legitname").val()).set(editor.getSession().getValue());
+                allTheThings.child($("#legitname").val()+"/data").set(editor.getSession().getValue());
                 allTheThings.child($("#legitname").val()+"/leP").set(selfKey);
             }
             function legit_load() {
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 					console.log(isMe);
 					isItReallyMe = isMe!=selfKey;
                     if (!isItReallyMe) {
-                        editor.getSession().setValue(snapshot.val());
+                        editor.getSession().setValue(snapshot.val().data);
                         editor.moveCursorToPosition(legitCursor);
                     }
                     legitFlag = false;

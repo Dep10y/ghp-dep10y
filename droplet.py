@@ -63,7 +63,7 @@ def newDroplet(gh_id=None, int_id=None):
         'size':'512mb'})
     if gh_id:
         firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Waiting for creation to finish', 'droplet_id':newdrop['droplet']['id']})
-    time.sleep(15)
+    time.sleep(30)
     if gh_id:
         firebase.patch('/projects/%s/%s/' % (gh_id, int_id), data={'state': 'Setting DNS'})
     createdDrop = doGet('/droplets/%s' % newdrop['droplet']['id'])

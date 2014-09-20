@@ -27,6 +27,10 @@ function setup_stuff() {
     var shrek = shrek2[shrek2.length - 1];
     window.shreks = shreks;
     editor.getSession().setMode("ace/mode/" + {py: "python", html: "html"}[shrek]);
+    $("#filename").html(shreks[2]);
+    firebase.child("projects").child(shreks[0]).child(shreks[1]).child("name").on("value", function(q) {
+        $("#projectname").html(q.val());
+    });
 }
 
 function push_that_button() {

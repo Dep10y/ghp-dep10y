@@ -19,21 +19,6 @@ function mkname(one, two) {
     return one[Math.floor(Math.random()*one.length)] + "-" + two[Math.floor(Math.random()*two.length)] + "-" + Math.floor(Math.random() * 10000)
 }
 
-function create_flask(ref) {
-    var nodes = [{
-        text: "app.py"
-    },
-    {
-        text: "templates",
-        children: [
-        {
-            "text": "index.html"
-        }
-        ]
-    }];
-    firebase.child("fs").child(usar.id).child(ref).set(nodes);
-}
-
 function mk_project(ptype) {
     var names1 = ["glorious", "fabulous", "amazing", "lord", "omniscient", "spooky", "scary"];
     var names2 = ["shrek", "ogre", "illuminati", "skeletons"];
@@ -41,7 +26,7 @@ function mk_project(ptype) {
     console.log("ref is " + ref);
     switch(ptype) {
         case "flask":
-            create_flask(ref);
+            location.href="/editor/editor.html#" + usar.id + ":" + ref + ":" + "app.py";
             break;
     }
     init();

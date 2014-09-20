@@ -49,10 +49,11 @@ html, body {
 			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
 		</span>
     </div>
+    <h2>Editing <span id="projectname"></span> -- <span id="filename"></span></h2>
     <div id="editor-container"><div id="editor"></div></div>
     <br />
     <div id="buttons">
-        <button class="ui red button">Deploy</button>
+        <button class="ui red button" onclick="push_that_button();">Deploy</button>
     </div>
     <div class="ui input">
 		<input type="text" id="padName" placeholder="File name"/>

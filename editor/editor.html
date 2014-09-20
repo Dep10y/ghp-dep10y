@@ -33,12 +33,17 @@ if __name__ == '__main__':
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/python");
             var allTheThings = new Firebase("https://dep10y.firebaseio.com/");
+            var legitFlag = false;
             function legit_save() {
                 allTheThings.child($("#legitname").val()).set(editor.getSession().getValue());
+                legitFlag = true;
             }
             function legit_load() {
                 allTheThings.child($("#legitname").val()).on('value', function(snapshot) {
-                    editor.getSession().setValue(snapshot.val());
+                    if(!legitFlag){
+                        editor.getSession().setValue(snapshot.val());
+                    }
+                    legitFlag = false;
                 }, function(error){console.log(error)});
             }
             editor.container.addEventListener("keyup", legit_save, true);

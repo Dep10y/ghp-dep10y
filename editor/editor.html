@@ -30,6 +30,7 @@ if __name__ == '__main__':
         <script src="/ace-builds/src-noconflict/ace.js"></script>
         <script>
             var editor = ace.edit("editor");
+            var legitCursor;
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/python");
             var allTheThings = new Firebase("https://dep10y.firebaseio.com/");
@@ -39,8 +40,10 @@ if __name__ == '__main__':
                 legitFlag = true;
             }
             function legit_load() {
+				
                 allTheThings.child($("#legitname").val()).on('value', function(snapshot) {
                     if(!legitFlag){
+						legitCursor = editor.getCursorPosition();
                         editor.getSession().setValue(snapshot.val());
                     }
                     legitFlag = false;

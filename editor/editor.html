@@ -24,12 +24,15 @@ html, body {
 	<script>
 		var firebase = new Firebase("https://dep10y.firebaseio.com/");
 
-	var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
+		var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
         if(error) {
             console.log(error);
         }
         else if(user) {
 			$("#user").html(user.provider+":"+user.username);
+		}
+		else {
+			location.href = "login.html";
 		}
 		});
 	

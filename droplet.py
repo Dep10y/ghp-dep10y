@@ -56,7 +56,7 @@ def newDroplet(gh_id=None, int_id=None):
     num = random.randint(1111111,9999999)
     images = {'flask':6219398,'sinatra':6219719}
     newdrop = doPost('/droplets',
-        {'name':'flask%s.dep10y.me' % num,
+        {'name':'%s%s.dep10y.me' % (project['type'],num),
         'region':'nyc3',
         'image': images[project['type']],
         'ssh_keys':[325148],

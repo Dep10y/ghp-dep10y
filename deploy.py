@@ -46,18 +46,19 @@ def doDeploy(project_id, fals):
         fi = open(os.path.join(tmpdir, files[f]['filepath']), 'w')
         fi.write(files[f]['text'])
         fi.close()
-    po = subprocess.Popen('/usr/bin/rsync -aze "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --delete %s/ web@%s:web' % (tmpdir, droplet['name']), shell=True)
+    net = droplet['networks']['v4'][0]['ip_address']
+    po = subprocess.Popen('/usr/bin/rsync -aze "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --delete %s/ web@%s:web' % (tmpdir, net), shell=True)
     print po.wait()
     print('rsync done!')
     if p['type'] == 'flask':
-        po = subprocess.Popen("/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web 'kill `cat /home/web/.app_pid`; sleep 3; kill -9 `cat /home/web/.app_pid`; '" % droplet['name'], shell=True)
+        po = subprocess.Popen("/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web 'kill `cat /home/web/.app_pid`; sleep 3; kill -9 `cat /home/web/.app_pid`; '" % net, shell=True)
         print po.wait()
-        po = subprocess.Popen('/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web \'screen -m -d /usr/bin/python /home/web/web/app.py; echo `pidof SCREEN` > /home/web/.app_pid\'' % droplet['name'], shell=True)
+        po = subprocess.Popen('/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web \'screen -m -d /usr/bin/python /home/web/web/app.py; echo `pidof SCREEN` > /home/web/.app_pid\'' % net, shell=True)
         print po.wait()
     elif p['type'] == 'sinatra':
-        po = subprocess.Popen("/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web 'kill `cat /home/web/.app_pid`; sleep 3; kill -9 `cat /home/web/.app_pid`; '" % droplet['name'], shell=True)
+        po = subprocess.Popen("/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web 'kill `cat /home/web/.app_pid`; sleep 3; kill -9 `cat /home/web/.app_pid`; '" % net, shell=True)
         print po.wait()
-        po = subprocess.Popen('/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web \'screen -m -d /usr/bin/ruby /home/web/web/app.rb; echo `pidof SCREEN` > /home/web/.app_pid\'' % droplet['name'], shell=True)
+        po = subprocess.Popen('/usr/bin/ssh %s -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -l web \'screen -m -d /usr/bin/ruby /home/web/web/app.rb; echo `pidof SCREEN` > /home/web/.app_pid\'' % net, shell=True)
         print po.wait()
     else:
         print('Unsupported type!')

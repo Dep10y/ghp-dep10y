@@ -66,11 +66,10 @@ html, body {
     </div>
     </div>
     <br />
-    <div id="buttons">
-        <button class="ui red button" onclick="push_that_button();">Deploy</button>
-    </div>
+     <button class="btn btn-danger" id="depBut" onclick="push_that_button();">Deploy</button>    &nbsp;
     <input type="text" class='form-control'  style="width:250px;display:inline" id="ftCreate" placeholder="File name"/>
 		    &nbsp; <a href="#" class='form-control btn btn-success'  style="width:250px;display:inline" id="createFile">Create File</a>
+    <br /><br /><i id="status"></i>
     <script src="/ace-builds/src-noconflict/ace.js"></script>
     <script src="static/firepad.js"></script>
     <script src="editor.js"></script>

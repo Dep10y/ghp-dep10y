@@ -51,9 +51,13 @@ function setup_stuff() {
     });
     construct_things(shreks[1]);
 }
-
+function restore() {
+	$("#depBut").html("Deploy");
+}
 function push_that_button() {
     save_code();
+    $("#depBut").html("Deploying...");
+    window.setTimeout(restore, 10000);
     firebase.child("code").once("value", function(v) {
         forreal = []
         v.forEach(function(x) {

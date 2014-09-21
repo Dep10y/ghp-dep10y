@@ -1,0 +1,62 @@
+<html>
+<head>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+    <script>
+		var things = new Firebase("https://dep10y.firebaseio.com/");
+    var auth = new FirebaseSimpleLogin(things, function(e, u) {
+        if(!e && u) {
+            location.href = "/editor/projects.html";
+            console.log(u);
+        }
+        else if (u) {
+			location.href = "index.html";
+		}
+        else {
+            console.log(e);
+        }
+    });
+function login(svc) {
+    var things = new Firebase("https://dep10y.firebaseio.com/");
+    var auth = new FirebaseSimpleLogin(things, function(e, u) {
+        if(!e && u) {
+            location.href = "/editor/projects.html";
+            console.log(u);
+        }
+        else if (u) {
+			location.href = "index.html";
+		}
+        else {
+            console.log(e);
+        }
+    });
+    auth.login(svc);
+}
+    </script>
+    <title>Dep10y</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="ui menu">
+		<h3 class="header item"><a href="index.html">Dep10y</a></h3>
+        <a class="item" href="editor.html">
+            <i class="edit icon"></i> Editor
+        </a>
+        <a class="active item" href="projects.html">
+            <i class="list icon"></i> Projects
+        </a>
+         <span class="right floated text item">
+			Signed in as <a href="#" id="user">Not Logged In</a>. <a href="logout.html">Logout?</a>
+		</span>
+    </div><div style="text-align:center">
+		<h2>Log in using</h2><br />
+		<!--<a onclick="login();" href="#" class="ui button">Login with GitHub</a>-->
+		<a onclick="login('github');" href="#" class="ui black large labeled button"><i class="fa fa-github"></i> Log in with Github</a>
+		<br /><br /><a onclick="login('twitter');" href="#" class="ui blue large labeled button"><i class="fa fa-twitter"></i> Log in with Twitter</a>
+    </div>
+    
+</body>
+</html>

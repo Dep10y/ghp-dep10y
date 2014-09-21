@@ -1,0 +1,127 @@
+<html>
+<head>
+    <title>Dep10y</title>
+    <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
+    <script src="//code.jquery.com/jquery.js"></script>
+        <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+    <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js"></script>
+    <script>
+var firebase = new Firebase("https://dep10y.firebaseio.com/");
+var usar = null;
+function rm_project(p) {
+    firebase.child('projects').child(usar.id).child(p).remove();
+    firebase.child("fs").child(usar.id).child(p).remove();
+    init();
+}
+
+function mkname(one, two) {
+    return one[Math.floor(Math.random()*one.length)] + "-" + two[Math.floor(Math.random()*two.length)] + "-" + Math.floor(Math.random() * 10000)
+}
+
+function mk_project(ptype) {
+    var names1 = ["glorious", "fabulous", "amazing", "lord", "omniscient", "spooky", "scary"];
+    var names2 = ["shrek", "ogre", "illuminati", "skeletons"];
+    var ref = firebase.child('projects').child(usar.id).push({name: mkname(names1, names2), type: ptype, state: "Waiting on server"}).name();
+    console.log("ref is " + ref);
+    switch(ptype) {
+        case "flask":
+            location.href="/editor/editor.html#" + usar.id + ":" + ref + ":" + "app.py";
+            break;
+    }
+    init();
+}
+function init() {
+    var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
+        if(error) {
+            console.log(error);
+        }
+        else if(user) {
+			$("#user").html(user.provider+":"+user.username);
+            console.log(user);
+            usar = user;
+            var source = $("#projects-template").html();
+            var template = Handlebars.compile(source);
+            firebase.child('projects').child(user.id).on('value', function(snapshot) {
+                console.log(snapshot.val());
+                if(snapshot.val() == null) {
+                    $("#projects").html($("#no-project-template").html());
+                    return;
+                }
+                var stuff = [];
+                for(key in snapshot.val()) {
+                    var o = snapshot.val()[key];
+                    o["id"] = key;
+                    o["is_running"] = (o["state"].indexOf("Running") == 0)
+                    stuff.push(o);
+                }
+                console.log(stuff);
+                $("#projects").html(template({projects: stuff}));
+            });
+        }
+        else {
+            $("#projects").html('<div class="ui error message"><div class="header">You are not logged in!</div></div>');
+			location.href = "login.html";
+        }
+    });
+}
+    </script>
+</head>
+
+<script id="projects-template" type="text/x-handlebars-template">
+<div class="ui list">
+    {{#each projects}}
+    <div class="item">
+        <div class="content">
+            {{name}} - {{#if is_running}} <a href="/editor/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i>
+        </div>
+    </div>
+{{/each}}
+</div>
+</script>
+<script id="no-project-template" type="text/x-handlebars-template">
+<div class="ui warning message">
+    <div class="header">
+        You have no projects!
+    </div>
+</div>
+</script>
+<body onload="init();">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
+
+    <div class="ui menu">
+		<h3 class="header item"><a href="index.html">Dep10y</a></h3>
+        <a class="item" href="editor.html">
+            <i class="edit icon"></i> Editor
+        </a>
+        <a class="active item" href="projects.html">
+            <i class="list icon"></i> Projects
+        </a>
+         <span class="right floated text item">
+			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
+		</span>
+    </div>
+    <div style="padding-left:30px;padding-top:20px">
+    <div class="ui form">
+        Create a new
+        <div class="ui blue submit button" onclick="mk_project('flask');">Flask</div>
+        app
+    </div>
+    <br />
+    <div class="ui" id="projects">
+        <div class="ui warning message">
+            <i class="close icon"></i>
+            <div class="header">
+                You have no projects!
+            </div>
+            You can create some, and they will appear here.
+        </div>
+        <div class="ui active dimmer">
+            <div class="ui text loader">Loading your projects</div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

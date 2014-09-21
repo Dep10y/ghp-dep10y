@@ -1,0 +1,101 @@
+
+<html>
+<head>
+    <title>Dep10y</title>
+    <style>
+html, body {
+    height: 95%;
+}
+#editor {
+    width: 100%;
+    height: 100%;
+}
+#editor-container {
+    width: 100%;
+    height: 50%;
+}
+    </style>
+    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.0.0/firepad.css" />
+    <link href="/editor/semantic/packaged/css/semantic.min.css" rel="stylesheet" />
+</head>
+<body>
+	    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+
+	    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+	<script>
+		var firebase = new Firebase("https://dep10y.firebaseio.com/");
+
+		var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
+        if(error) {
+            console.log(error);
+        }
+        else if(user) {
+			$("#user").html(user.provider+":"+user.username);
+		}
+		else {
+			location.href = "login.html";
+		}
+		});
+	
+	</script>
+    <div class="ui menu">
+<<<<<<< HEAD
+		<h3 class="header item"><a href="index.html">Dep10y</a></h3>
+=======
+		<h3 class="header item">Dep10y</h3>
+>>>>>>> 5a6495798a9464a89e62fa2b3a95a9b3daf542de
+        <a class="item" href="editor.html">
+            <i class="edit icon"></i> Editor
+        </a>
+        <a class="item" href="projects.html">
+            <i class="list icon"></i> Projects
+        </a>
+         <span class="right floated text item">
+			Signed in as <a href="#" id="user">Not Logged In</a>. <a href="logout.html">Logout?</a>
+		</span>
+    </div>
+   
+    <script src="//code.jquery.com/jquery.js"></script>
+    <div class="jumbotron" style="background-color:white;text-align:center">
+    <h1>Dep10y</h1>
+    <br />
+    <p>Tired of managing your servers? Want to code more, manage less? Annoyed
+<<<<<<< HEAD
+    of having to search for templates each time you want to create a web app? 
+=======
+    of having to search for templates each time you want to create a web app? <br />
+>>>>>>> 5a6495798a9464a89e62fa2b3a95a9b3daf542de
+    Dep10y is a managed infrastructure Platform as a Service; select your template, and code collaboratively, in realtime. 
+    When you decide to dep10y you code, do it in the blink of an eye. No longer do you have to waste your time on preparing your app! Still not convinced? Keep reading!</p>
+    <br />
+    <a href="login.html" class="ui black large labeled button"><i class="fa fa-flag"></i> Get Started</a> 
+
+    <br />
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
+    <div class="col-md-3">
+		<h2>Quick & Minimalistic</h2>
+		Our web interface allows you to write your code, and deploy it with surprising ease. 
+		We also have quickstart templates, allowing you to get started within 10 minutes, no matter your skill level.
+    </div>
+    <div class="col-md-3">
+		<h2>Secure</h2>
+		Dep10y allows you to host us on your own infrastructure. You do not need to use our servers, so all your data is safe and secure.
+		While some services try to force you onto their serves, we are flexible and assign resourceful VPSes for each project.
+    </div>
+    <div class="col-md-3">
+		<h2>Collaborative</h2>
+		Dep10y uses Firebase to allow seamless realtime collaboration. 
+		Add your friend to your project, and code together!
+    </div>
+    <div class="col-md-3">
+		<h2>Flexible</h2>
+		Use whatever technologies suit you best. Our assortment of templates is sure to suit you. 
+    </div>
+    
+   <br /><br />
+    </div>
+
+    
+
+</body>
+</html>

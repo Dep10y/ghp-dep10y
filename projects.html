@@ -26,7 +26,7 @@ function mk_project(ptype) {
     var names2 = ["bird", "sheep", "cow", "cake"];
     var ref = firebase.child('projects').child(usar.id).push({name: mkname(names1, names2), type: ptype, state: "Waiting on server"}).name();
     console.log("ref is " + ref);
-    redir(ptype);
+    redir(ptype, ref);
     init();
 }
 

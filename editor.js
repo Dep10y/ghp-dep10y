@@ -2,6 +2,8 @@ var projec = window.location.hash.replace(/#/g, '');
 var project = projec.replace(/\./g, '-').replace(/\//g, '-');
 var editor;
 var firebase;
+$("#jcollab").hide();
+
 
 function init() {
     save_code();
@@ -83,3 +85,12 @@ function push_that_button() {
         });
     });
 }
+$("#collab").attr("onclick", "javascript:void window.open('collab.html#"+project+"','1411307004190','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;");
+
+var moxtrameet;
+firebase.child("code").child(project).child("moxtrameet").on("value", function(q){
+        moxtrameet = q.val();
+        $("#jcollab").show();
+        $("#jcollab").attr("onclick", "javascript:void window.open('jcollab.html#"+moxtrameet+"','1411307004190','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;");
+        
+    });

@@ -125,7 +125,7 @@ function ogredashrek(a) {
     <div class="item">
         <div class="content">
             {{name}} - {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');">Editor</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i><br />
-            <input id="shrekdalord" /><input type='button' onclick='ogredashrek("{{id}}");' value="Add collaborator" />
+            <div class="ui-input"><input id="shrekdalord" /></div><input type='ui button' onclick='ogredashrek("{{id}}");' value="Add collaborator" />
         </div>
     </div>
 {{/each}}

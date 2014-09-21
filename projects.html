@@ -45,6 +45,8 @@ function init() {
             console.log(error);
         }
         else if(user) {
+            var shrekdaogre = user.provider+":"+user.username;
+            window.ogre = shrekdaogre;
 			$("#user").html(user.provider+":"+user.username);
             console.log(user);
             usar = user;
@@ -64,7 +66,23 @@ function init() {
                     stuff.push(o);
                 }
                 console.log(stuff);
-                $("#projects").html(template({projects: stuff}));
+                firebase.child('projects').on('value', function(proj) {
+                    var collab = [];
+                    proj.forEach(function(u) {
+                        u.forEach(function(p) {
+                            console.log(p.val());
+                            if(p.val().collab && (p.val().collab.indexOf(shrekdaogre) != -1)) {
+                                o = p.val();
+                                o["id"] = p.ref().name();
+                                o["is_running"] = (o["state"].indexOf("Running") == 0);
+                                console.log(o);
+                                collab.push(o);
+                            }
+                        });
+                    });
+                    $("#projects").html(template({projects: stuff, collab: collab}));
+                    console.log("collaber" + collab);
+                });
             });
         }
         else {
@@ -72,6 +90,11 @@ function init() {
 			location.href = "login.html";
         }
     });
+}
+
+function ogredashrek(a) {
+    firebase.child('projects').child(usar.id).child(a).child("collab").push($("#shrekdalord").val());
+    $("#shrekdalord").val("");
 }
     </script>
 </head>
@@ -81,10 +104,18 @@ function init() {
     {{#each projects}}
     <div class="item">
         <div class="content">
-            {{name}} - {{#if is_running}} <a href="/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i>
+            {{name}} - {{#if is_running}} <a href="/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i><br />
+            <input id="shrekdalord" /><input type='button' onclick='ogredashrek("{{id}}");' value="Add collaborator" />
         </div>
     </div>
 {{/each}}
+    {{#each collab}}
+    <div class="item">
+        <div class="content">
+            Collaborating on {{name}} - {{#if is_running}} <a href="/files.html#{{id}}">Files</a> -{{/if}} <i>{{state}}</i>
+        </div>
+    </div>
+    {{/each}}
 <br /><br /><i>Tip: You can use custom domains with Dep10y by pointing a CNAME record to your projects' auto-assigned Dep10y subdomain.</i>
 </div>
 </script>

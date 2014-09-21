@@ -1,0 +1,25 @@
+<html>
+<head>
+	    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+
+	    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+<script>
+		var firebase = new Firebase("https://dep10y.firebaseio.com/");
+
+		var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
+        if(error) {
+            console.log(error);
+        }
+        else if(user) {
+			fireshrek.logout();
+		}
+		});
+		location.href = "/";
+	
+	</script>
+	</head>
+	<body>
+	Successfully logged out.
+	
+	</body>
+	</html>

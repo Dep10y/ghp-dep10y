@@ -28,10 +28,7 @@ function mk_project(ptype) {
     console.log("ref is " + ref);
     switch(ptype) {
         case "flask":
-            location.href="/editor.html#" + usar.id + ":" + ref + ":" + "app.py";
-            break;
-        case "sinatra":
-            location.href="/editor.html#" + usar.id + ":" + ref + ":" + "app.rb";
+            location.href="/editor/editor.html#" + usar.id + ":" + ref + ":" + "app.py";
             break;
     }
     init();
@@ -78,7 +75,7 @@ function init() {
     {{#each projects}}
     <div class="item">
         <div class="content">
-            {{name}} - {{#if is_running}} <a href="/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i>
+            {{name}} - {{#if is_running}} <a href="/editor/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i>
         </div>
     </div>
 {{/each}}
@@ -110,7 +107,6 @@ function init() {
     <div class="ui form">
         Create a new
         <div class="ui blue submit button" onclick="mk_project('flask');">Flask</div>
-        <div class="ui red submit button" onclick="mk_project('sinatra');">Sinatra</div>
         app
     </div>
     <br />

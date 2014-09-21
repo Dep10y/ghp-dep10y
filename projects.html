@@ -22,8 +22,8 @@ function mkname(one, two) {
 }
 
 function mk_project(ptype) {
-    var names1 = ["glorious", "fabulous", "amazing", "lord", "omniscient", "spooky", "scary"];
-    var names2 = ["shrek", "ogre", "illuminati", "skeletons"];
+    var names1 = ["awesome", "great", "amazing", "purple", "omniscient", "spooky", "lovely"];
+    var names2 = ["bird", "sheep", "cow", "cake"];
     var ref = firebase.child('projects').child(usar.id).push({name: mkname(names1, names2), type: ptype, state: "Waiting on server"}).name();
     console.log("ref is " + ref);
     switch(ptype) {

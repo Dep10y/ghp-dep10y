@@ -44,12 +44,12 @@ function setup_stuff() {
     var shrek2 = shreks[2].split(".");
     var shrek = shrek2[shrek2.length - 1];
     window.shreks = shreks;
-    editor.getSession().setMode("ace/mode/" + {py: "python", html: "html"}[shrek]);
+    editor.getSession().setMode("ace/mode/" + {py: "python", html: "html", rb: "ruby"}[shrek]);
     $("#filename").html(shreks[2]);
     firebase.child("projects").child(shreks[0]).child(shreks[1]).child("name").on("value", function(q) {
         $("#projectname").html(q.val());
     });
-    var stat = firebase.child("projects").child(shreks[0]).child(shreks[1]).child("state");
+    var stat = firebase.child("projects").child(shreks[0]).child(shreks[1]).child("state").val();
     var staturl = stat.match(/Running at ([a-z0-9\.])/g);
     if (staturl.length != 0){
         $("#projurl").html(staturl[0]);

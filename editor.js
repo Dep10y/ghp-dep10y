@@ -50,7 +50,7 @@ function setup_stuff() {
         $("#projectname").html(q.val());
     });
     var stat = firebase.child("projects").child(shreks[0]).child(shreks[1]).child("state").val();
-    var staturl = stat.match(/Running at ([a-z0-9\.])/g);
+    var staturl = /Running at ([a-z0-9\.]+)/g.exec(stat);
     if (staturl.length != 0){
         $("#projurl").html(staturl[0]);
     }

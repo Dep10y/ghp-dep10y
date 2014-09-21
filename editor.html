@@ -57,6 +57,7 @@ html, body {
 			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
 		</span>
     </div>
+    <div style="padding-left:20px">
     <div class="ui grid">
     <div class="four wide column" id="stueben">
 	</div><div class="twelve wide column">
@@ -68,9 +69,8 @@ html, body {
     <div id="buttons">
         <button class="ui red button" onclick="push_that_button();">Deploy</button>
     </div>
-    <div class="ui input">
-		<input type="text" id="padName" placeholder="File name"/>
-	</div>
+    <input type="text" class='form-control'  style="width:250px;display:inline" id="ftCreate" placeholder="File name"/>
+		    &nbsp; <a href="#" class='form-control btn btn-success'  style="width:250px;display:inline" id="createFile">Create File</a>
     <script src="/ace-builds/src-noconflict/ace.js"></script>
     <script src="static/firepad.js"></script>
     <script src="editor.js"></script>
@@ -86,6 +86,6 @@ html, body {
         construct_things();
     </script>
     
-
+</div>
 </body>
 </html>

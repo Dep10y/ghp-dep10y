@@ -77,10 +77,12 @@ function construct_things(id) {
         console.log(hue);
         var nodes = [];
         nodes.push(hue);
+        console.log("WHAT FOLLOSW IS SHREKT");
+        console.log(nodes);
         $("#stueben").tree({data: nodes});
         $("#stueben").bind("tree.click", function(e) {
             var node = e.node;
-            location.href = node.url;
+            location.href = "/editor/editor.html#" + window.shreks[0] + ":" + window.shreks[1] + ":" + node.label.slice(1);
             location.reload();
         });
     });

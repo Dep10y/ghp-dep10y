@@ -77,13 +77,14 @@ function init() {
                     var collab = [];
                     proj.forEach(function(u) {
                         u.forEach(function(p) {
-                            console.log(p.val());
                             if(p.val().collab && (p.val().collab.indexOf(shrekdaogre) != -1)) {
                                 o = p.val();
                                 o["id"] = p.ref().name();
                                 o["is_running"] = (o["state"].indexOf("Running") == 0);
-                                o["shrek"] = u;
-                                console.log(o);
+                                for(var aasdf in u) {
+                                    break;
+                                }
+                                o["shrek"] = aasdf;
                                 collab.push(o);
                             }
                         });
@@ -147,7 +148,7 @@ function ogredashrek(a) {
     {{#each collab}}
     <div class="item">
         <div class="content">
-            Collaborating on {{name}} - {{#if is_running}} <a href="#" class="ui blue button" onclick="redir('{{type}}', '{{id}}', {{shrek}});">Editor</a> -{{/if}} <i>{{state}}</i>
+            Collaborating on {{name}} - {{#if is_running}} <a href="#" class="ui blue button" onclick="redir('{{type}}', '{{id}}', '{{shrek}}');">Editor</a> -{{/if}} <i>{{state}}</i>
         </div>
     </div>
     {{/each}}

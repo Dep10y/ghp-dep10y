@@ -23,6 +23,10 @@ html, body {
 	    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
 
 	    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+        <script src="/editor/fileutil.js"></script>
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="tree.jquery.js"></script>
+        <link href="jqtree.css" rel="stylesheet" />
 	<script>
 		var firebase = new Firebase("https://dep10y.firebaseio.com/");
 
@@ -54,8 +58,7 @@ html, body {
 		</span>
     </div>
     <div class="ui grid">
-    <div class="four wide column">
-		<p>The tree thing</p>
+    <div class="four wide column" id="stueben">
 	</div><div class="twelve wide column">
     <h2>Editing <span id="projectname"></span> -- <span id="filename"></span></h2>
     <div id="editor-container"><div id="editor"></div></div>
@@ -68,7 +71,6 @@ html, body {
     <div class="ui input">
 		<input type="text" id="padName" placeholder="File name"/>
 	</div>
-    <script src="//code.jquery.com/jquery.js"></script>
     <script src="/ace-builds/src-noconflict/ace.js"></script>
     <script src="static/firepad.js"></script>
     <script src="editor.js"></script>
@@ -81,6 +83,7 @@ html, body {
     <script>
 		setup_editor();
 		setup_stuff();
+        construct_things();
     </script>
     
 

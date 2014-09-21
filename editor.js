@@ -54,7 +54,7 @@ function setup_stuff() {
         if (staturl.length != 0){
             $("#projurl").html(staturl[0]);
         }
-    }
+    });
 
     construct_things(shreks[1]);
 }

@@ -30,6 +30,7 @@ function setup_editor() {
     if (type == 'php'){
         editor.getSession().setMode("ace/mode/php");
     }
+    console.log("THE FIREPAD IS " + project);
     var firepad = Firepad.fromACE(firebase.child("code").child(project), editor, {
         defaultText: ''
     });

@@ -33,6 +33,9 @@ function mk_project(ptype) {
         case "sinatra":
             location.href="/editor.html#" + usar.id + ":" + ref + ":" + "app.rb";
             break;
+        case "php":
+            location.href="/editor.html#" + usar.id + ":" + ref + ":" + "index.php";
+            break;
     }
     init();
 }
@@ -111,6 +114,7 @@ function init() {
         Create a new
         <div class="ui blue submit button" onclick="mk_project('flask');">Flask</div>
         <div class="ui red submit button" onclick="mk_project('sinatra');">Sinatra</div>
+        <div class="ui green submit button" onclick="mk_project('php');">PHP</div>
         app
     </div>
     <br />

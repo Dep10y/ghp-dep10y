@@ -49,6 +49,12 @@ function setup_stuff() {
     firebase.child("projects").child(shreks[0]).child(shreks[1]).child("name").on("value", function(q) {
         $("#projectname").html(q.val());
     });
+    var stat = firebase.child("projects").child(shreks[0]).child(shreks[1]).child("state");
+    var staturl = stat.match(/Running at ([a-z0-9\.])/g);
+    if (staturl.length != 0){
+        $("#projurl").html(staturl[0]);
+    }
+
     construct_things(shreks[1]);
 }
 function restore() {

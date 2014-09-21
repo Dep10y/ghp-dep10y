@@ -40,7 +40,6 @@ function setup_stuff() {
     firebase.child("projects").child(shreks[0]).child(shreks[1]).child("name").on("value", function(q) {
         $("#projectname").html(q.val());
     });
-    construct_things(shreks[1]);
 }
 
 function push_that_button() {

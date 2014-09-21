@@ -76,6 +76,8 @@ function init() {
                 firebase.child('projects').on('value', function(proj) {
                     var collab = [];
                     proj.forEach(function(u) {
+                        console.log("THE IMPORTANT INFORMATION FOLLOWS");
+                        console.log(u.name());
                         u.forEach(function(p) {
                             if(p.val().collab && (p.val().collab.indexOf(shrekdaogre) != -1)) {
                                 o = p.val();
@@ -84,7 +86,7 @@ function init() {
                                 for(var aasdf in u) {
                                     break;
                                 }
-                                o["shrek"] = aasdf;
+                                o["shrek"] = u.name();
                                 collab.push(o);
                             }
                         });

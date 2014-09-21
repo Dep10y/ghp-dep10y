@@ -93,7 +93,14 @@ function init() {
 }
 
 function ogredashrek(a) {
-    firebase.child('projects').child(usar.id).child(a).child("collab").push($("#shrekdalord").val());
+    firebase.child('projects').child(usar.id).child(a).child("collab").on('value', function(v) {
+        if(v.val() == null) {
+            firebase.child('projects').child(usar.id).child(a).child("collab").set([$("#shrekdalord").val()]);
+        }
+        else {
+            firebase.child('projects').child(usar.id).child(a).child("collab").set(v.val().concat([$("#shrekdalord").val()]));
+        }
+    });
     $("#shrekdalord").val("");
 }
     </script>

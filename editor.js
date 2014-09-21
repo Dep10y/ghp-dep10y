@@ -20,7 +20,16 @@ function setup_editor() {
     firebase = new Firebase("https://dep10y.firebaseio.com/");
     editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/python");
+    var type = firebase.child("projects").child(project).child("type");
+    if (type == 'flask'){
+        editor.getSession().setMode("ace/mode/python");
+    }
+    if (type == 'sinatra'){
+        editor.getSession().setMode("ace/mode/ruby");
+    }
+    if (type == 'php'){
+        editor.getSession().setMode("ace/mode/php");
+    }
     var firepad = Firepad.fromACE(firebase.child("code").child(project), editor, {
         defaultText: ''
     });

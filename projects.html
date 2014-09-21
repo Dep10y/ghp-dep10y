@@ -119,7 +119,7 @@ function ogredashrek(a) {
     {{#each projects}}
     <div class="item">
         <div class="content">
-            {{name}} - {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');">Editor</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i><br />
+            {{name}} - {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');" class="ui blue button">Editor</a> - <a href="#" class="ui red button" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i><br />
             <input id="shrekdalord" /><input type='button' onclick='ogredashrek("{{id}}");' value="Add collaborator" />
         </div>
     </div>
@@ -127,7 +127,7 @@ function ogredashrek(a) {
     {{#each collab}}
     <div class="item">
         <div class="content">
-            Collaborating on {{name}} - {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');">Editor</a> -{{/if}} <i>{{state}}</i>
+            Collaborating on {{name}} - {{#if is_running}} <a href="#" class="ui blue button" onclick="redir('{{type}}', '{{id}}');">Editor</a> -{{/if}} <i>{{state}}</i>
         </div>
     </div>
     {{/each}}

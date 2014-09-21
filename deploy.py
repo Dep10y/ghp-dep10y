@@ -40,6 +40,8 @@ def doDeploy(project_id, fals):
     files = fals
     tmpdir = tempfile.mkdtemp()
     for f in files:
+        if not os.path.exists(files[f]['filepath']):
+            os.makedirs(files[f]['filepath'])
         fi = open(os.path.join(tmpdir, files[f]['filepath']), 'w')
         fi.write(files[f]['text'])
         fi.close()

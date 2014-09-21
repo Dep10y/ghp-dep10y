@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
+	<script>
+		var fname_prov;
+		var lname_user;
+		var projname;
+		projname = window.location.hash.replace(/#/g, '');
+
+		var firebase = new Firebase("https://dep10y.firebaseio.com/");
+
+		var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
+			if(error) {
+				console.log(error);
+			}
+			else if(user) {
+				fname_prov = u.provider;
+				lname_user = u.username;
+			}
+		});
+	
+	</script>
+        <meta charset="UTF-8" />
+ 
+        <!-- Include Moxtra JavaScript Library -->
+        <script type="text/javascript" src="https://www.moxtra.com/api/js/moxtra-latest.js" id="moxtrajs" data-client-id="jY_E7R2j82E"></script>
+ 
+        <!-- Include External JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha256.js"></script>
+        <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+ 
+        <!-- Create Signature -->
+        <script type="text/javascript">// <![CDATA[
+            var client_id = "jY_E7R2j82E";
+            var client_secret = "ljkx7LYOGh4";
+            var timestamp = new Date().getTime();
+            var unique_id = "unique_user_id"; //Unique ID of how user is identified in your system
+            
+            var hash = CryptoJS.HmacSHA256(client_id + unique_id + timestamp, client_secret);
+            var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+            var signature = hashInBase64.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
+            // ]]>
+        </script>
+        
+        <!-- Initialize user and get access token -->
+        <script type="text/javascript">
+            function get_token() {
+                var init_options = {
+                    uniqueid: unique_id,
+                    firstname: fname_prov,
+                    lastname: lname_user,
+                    timestamp: timestamp,
+                    signature: signature,
+                    get_accesstoken: function(result) {
+                        console.log("access_token: " + result.access_token + " expires in: " + result.expires_in);
+                        start_meet(result.access_token);
+                    },
+                    error: function(result) {
+                        console.log("error code: " + result.error_code + " message: " + result.error_message);
+                    }
+                };
+                Moxtra.setup(init_options);
+            }
+        </script>
+ 
+        <!-- Start Meet Function using access_token -->
+        <script type="text/javascript">
+        function start_meet(access_token) {
+            var meet_options = {
+                iframe: true, //To open the meet in the same window within an iFrame.
+                // tab: true, //To open the meet in a new browser tab, N/A if iframe option is set to true.
+                tagid4iframe: "meet-container",
+                iframewidth: "710px",
+                iframeheight: "510px",
+                extension: { 
+                    "show_dialogs": { "meet_invite": true } 
+                },
+                access_token: access_token,
+                start_meet: function(event) {
+                    console.log("Meet Started - session_id: "+event.session_id+"session_key: "+event.session_key);
+                    //Your application server can upload files to meet using the session_id and session_key
+                    // fb here
+                    event.session_key
+                    firebase.child("code").child(projname).child("moxtrameet").set(event.session_key);
+
+                },
+                error: function(event) {
+                    console.log("error code: " + event.error_code + " message: " + event.error_message);
+                },
+                end_meet: function(event) {
+                    console.log("Meet Ended");
+                }
+            };
+            Moxtra.meet(meet_options);
+        }
+        </script>
+            
+    </head>
+    <body>
+		<script>
+		$(document).ready(function () {
+			get_token();
+		});
+		</script>
+        <!--<h3><a id="getToken" href="javascript:get_token();">Moxtra Meet</a></h3>-->
+    </body>
+</html>

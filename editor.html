@@ -16,6 +16,11 @@ html, body {
     </style>
     <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.0.0/firepad.css" />
     <link href="semantic/packaged/css/semantic.min.css" rel="stylesheet" />
+    <style>
+        .ui.menu .item {
+            font-size:15px !important;
+        }
+    </style>
 </head>
 <body>
 	    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
@@ -41,36 +46,40 @@ html, body {
 			location.href = "login.html";
 		}
 		});
+
+function shrektify() {
+    location.href = "/editor.html#" + user.id + ":" + window.shreks[1] + ":" + $("#ftCreate").val();
+    location.reload();
+}
 	
 	</script>
 	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
 
     <div class="ui menu">
 		<h3 class="header item"><a href="index.html">Dep10y</a></h3>
-        <a class="item active" href="editor.html">
-            <i class="edit icon"></i> Editor
-        </a>
         <a class="item" href="projects.html">
-            <i class="list icon"></i> Projects
+            <i class="list icon"></i> Dashboard
         </a>
          <span class="right floated text item">
 			Signed in as <a href="#" id="user">loading</a>. <a href="logout.html">Logout?</a>
 		</span>
     </div>
+    <div style="padding-left:20px">
     <div class="ui grid">
     <div class="four wide column" id="stueben">
 	</div><div class="twelve wide column">
-    <h2>Editing <span id="projectname"></span> -- <span id="filename"></span></h2>
+    <h2>Editing <span id="projectname"></span> -- <span id="filename"></span> (<span id="projurl"></span>)</h2>
     <div id="editor-container"><div id="editor"></div></div>
     </div>
     </div>
     <br />
-    <div id="buttons">
-        <button class="ui red button" onclick="push_that_button();">Deploy</button>
-    </div>
-    <div class="ui input">
-		<input type="text" id="padName" placeholder="File name"/>
-	</div>
+    <a href="jcollab.html" class="btn btn-warning" id = "jcollab" onclick="javascript:void window.open('jcollab.html#something','1411307004190','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;">Join Moxtra Meet</a>
+&nbsp;
+<a href="collab.html" id="collab" class="btn btn-info" onclick="javascript:void window.open('collab.html#nothing','1411307004190','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;">Create Moxtra Meet</a>
+&nbsp; <button class="btn btn-danger" id="depBut" onclick="push_that_button();">Deploy</button>    &nbsp;
+    <input type="text" class='form-control'  style="width:250px;display:inline" id="ftCreate" placeholder="File name"/>
+		    &nbsp; <a href="#" class='form-control btn btn-success' onclick="shrektify();" style="width:250px;display:inline" id="createFile">Create File</a>
+    <br /><br /><i id="status"></i>
     <script src="/ace-builds/src-noconflict/ace.js"></script>
     <script src="static/firepad.js"></script>
     <script src="editor.js"></script>
@@ -86,6 +95,6 @@ html, body {
         construct_things();
     </script>
     
-
+</div>
 </body>
 </html>

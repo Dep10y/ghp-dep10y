@@ -7,12 +7,12 @@
 		var firebase = new Firebase("https://dep10y.firebaseio.com/");
 
 		var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
-        if(error) {
-            console.log(error);
-        }
-        else if(user) {
-			fireshrek.logout();
-		}
+			if(error) {
+				console.log(error);
+			}
+			else if(user) {
+				fireshrek.logout();
+			}
 		});
 		location.href = "index.html";
 	

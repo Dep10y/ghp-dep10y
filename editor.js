@@ -49,10 +49,11 @@ function setup_stuff() {
     firebase.child("projects").child(shreks[0]).child(shreks[1]).child("name").on("value", function(q) {
         $("#projectname").html(q.val());
     });
-    var stat = firebase.child("projects").child(shreks[0]).child(shreks[1]).child("state").val();
-    var staturl = /Running at ([a-z0-9\.]+)/g.exec(stat);
-    if (staturl.length != 0){
-        $("#projurl").html(staturl[0]);
+    firebase.child("projects").child(shreks[0]).child(shreks[1]).child("state").on("value", function(q){
+        var staturl = /Running at ([a-z0-9\.]+)/g.exec(q.val());
+        if (staturl.length != 0){
+            $("#projurl").html(staturl[0]);
+        }
     }
 
     construct_things(shreks[1]);

@@ -124,7 +124,7 @@ function ogredashrek(a) {
     {{#each projects}}
     <div class="item">
         <div class="content">
-            {{name}} - {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');" class="ui blue button">Editor</a> - <a href="#" class="ui red button" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i><br />
+            {{name}} {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');" class="ui green button">Editor</a> <a href="#" class="ui red button" onclick="rm_project('{{id}}');">Delete project</a>{{/if}} <i>{{state}}</i><br /><br />
             <div class="ui six column divided grid">
                 <div class="row">
                     <div class="left floated two wide column">

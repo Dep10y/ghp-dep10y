@@ -26,6 +26,11 @@ function mk_project(ptype) {
     var names2 = ["bird", "sheep", "cow", "cake"];
     var ref = firebase.child('projects').child(usar.id).push({name: mkname(names1, names2), type: ptype, state: "Waiting on server"}).name();
     console.log("ref is " + ref);
+    redir(ptype);
+    init();
+}
+
+function redir(ptype, ref) {
     switch(ptype) {
         case "flask":
             location.href="/editor.html#" + usar.id + ":" + ref + ":" + "app.py";
@@ -37,8 +42,9 @@ function mk_project(ptype) {
             location.href="/editor.html#" + usar.id + ":" + ref + ":" + "index.php";
             break;
     }
-    init();
+
 }
+
 function init() {
     var fireshrek = new FirebaseSimpleLogin(firebase, function(error, user) {
         if(error) {
@@ -113,7 +119,7 @@ function ogredashrek(a) {
     {{#each projects}}
     <div class="item">
         <div class="content">
-            {{name}} - {{#if is_running}} <a href="/files.html#{{id}}">Files</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i><br />
+            {{name}} - {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');">Editor</a> - <a href="#" onclick="rm_project('{{id}}');">Delete project</a> -{{/if}} <i>{{state}}</i><br />
             <input id="shrekdalord" /><input type='button' onclick='ogredashrek("{{id}}");' value="Add collaborator" />
         </div>
     </div>
@@ -121,7 +127,7 @@ function ogredashrek(a) {
     {{#each collab}}
     <div class="item">
         <div class="content">
-            Collaborating on {{name}} - {{#if is_running}} <a href="/files.html#{{id}}">Files</a> -{{/if}} <i>{{state}}</i>
+            Collaborating on {{name}} - {{#if is_running}} <a href="#" onclick="redir('{{type}}', '{{id}}');">Editor</a> -{{/if}} <i>{{state}}</i>
         </div>
     </div>
     {{/each}}

@@ -41,6 +41,11 @@ html, body {
 			location.href = "login.html";
 		}
 		});
+
+function shrektify() {
+    location.href = "/editor.html#" + user.id + ":" + window.shreks[1] + ":" + $("#ftCreate").val();
+    location.reload();
+}
 	
 	</script>
 	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css" rel="stylesheet">
@@ -68,7 +73,7 @@ html, body {
     <br />
      <button class="btn btn-danger" id="depBut" onclick="push_that_button();">Deploy</button>    &nbsp;
     <input type="text" class='form-control'  style="width:250px;display:inline" id="ftCreate" placeholder="File name"/>
-		    &nbsp; <a href="#" class='form-control btn btn-success'  style="width:250px;display:inline" id="createFile">Create File</a>
+		    &nbsp; <a href="#" class='form-control btn btn-success' onclick="shrektify();" style="width:250px;display:inline" id="createFile">Create File</a>
     <br /><br /><i id="status"></i>
     <script src="/ace-builds/src-noconflict/ace.js"></script>
     <script src="static/firepad.js"></script>

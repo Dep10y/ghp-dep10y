@@ -30,16 +30,17 @@ function mk_project(ptype) {
     init();
 }
 
-function redir(ptype, ref) {
+function redir(ptype, ref, u) {
+    if(!u) u = usar.id;
     switch(ptype) {
         case "flask":
-            location.href="/editor.html#" + usar.id + ":" + ref + ":" + "app.py";
+            location.href="/editor.html#" + u + ":" + ref + ":" + "app.py";
             break;
         case "sinatra":
-            location.href="/editor.html#" + usar.id + ":" + ref + ":" + "app.rb";
+            location.href="/editor.html#" + u + ":" + ref + ":" + "app.rb";
             break;
         case "php":
-            location.href="/editor.html#" + usar.id + ":" + ref + ":" + "index.php";
+            location.href="/editor.html#" + u + ":" + ref + ":" + "index.php";
             break;
     }
 
@@ -81,6 +82,7 @@ function init() {
                                 o = p.val();
                                 o["id"] = p.ref().name();
                                 o["is_running"] = (o["state"].indexOf("Running") == 0);
+                                o["shrek"] = u;
                                 console.log(o);
                                 collab.push(o);
                             }
@@ -145,7 +147,7 @@ function ogredashrek(a) {
     {{#each collab}}
     <div class="item">
         <div class="content">
-            Collaborating on {{name}} - {{#if is_running}} <a href="#" class="ui blue button" onclick="redir('{{type}}', '{{id}}');">Editor</a> -{{/if}} <i>{{state}}</i>
+            Collaborating on {{name}} - {{#if is_running}} <a href="#" class="ui blue button" onclick="redir('{{type}}', '{{id}}', {{shrek}});">Editor</a> -{{/if}} <i>{{state}}</i>
         </div>
     </div>
     {{/each}}
